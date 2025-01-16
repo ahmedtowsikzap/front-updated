@@ -10,7 +10,7 @@ function UserDashboard() {
   const location = useLocation();
   const { userId, username } = location.state || {};
 
-  // Check if userId is not passed
+  // Check if userId is not passed or not
   useEffect(() => {
     if (!userId) {
       setError("No user ID provided.");
