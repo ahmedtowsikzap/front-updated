@@ -1,0 +1,11 @@
+.animated-cursor {
+    caret-color: #e21396;
+    animation: blink 1.2s steps(2, start) infinite;
+  }
+  
+  @keyframes blink {
+    40% {
+      caret-color: transparent;
+    }
+  }
+  
