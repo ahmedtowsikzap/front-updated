@@ -16,7 +16,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-  const role = location.state?.role || '';
+  const {username, role} = location.state || '';
 
   useEffect(() => {
     async function fetchData() {
@@ -108,6 +108,9 @@ function AdminDashboard() {
       setNewUsername('');
       setNewPassword('');
       setNewRole('');
+
+      window.location.reload(); 
+
     } catch (error) {
       console.error('Error creating user:', error);
       alert('Failed to create user. Please try again.');
@@ -121,7 +124,7 @@ function AdminDashboard() {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-screen-lg mx-auto bg-white rounded-lg shadow-xl p-6">
-        <h2 className="text-4xl font-semibold text-gray-800 mb-6">Admin Dashboard</h2>
+        <h2 className="text-4xl font-semibold text-gray-800 mb-6">Welcome <strong>{username}</strong></h2>
         <p className="text-lg text-gray-600 mb-8">Role: <strong>{role}</strong></p>
 
         {role !== 'CEO' && role !== 'Manager' ? (
