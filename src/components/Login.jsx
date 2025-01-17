@@ -23,7 +23,7 @@ function Login() {
       alert(message);
 
       if (role === 'CEO' || role === 'Manager') {
-        navigate('/admin', { state: { role } });
+        navigate('/admin', { state: { role, username: dbUsername } });
       } else if (role === 'User') {
         navigate('/user', { state: { userId, username: dbUsername } });
       } else {
@@ -41,7 +41,7 @@ function Login() {
       style={{ backgroundColor: '#E2136E' }}
     >
       <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Welcome Back!</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Team Govaly</h2>
         <p className="text-center text-gray-500 mb-8">Please log in to your account</p>
         <form onSubmit={handleLogin}>
           <div className="mb-6">
