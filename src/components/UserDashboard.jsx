@@ -51,6 +51,7 @@ function UserDashboard() {
         {sheets.length > 0 ? (
           sheets.map((sheet) => (
             <div key={sheet._id} className="bg-white p-4 rounded shadow-md">
+              <p className="font-semibold mb-2">{sheet.sheetName}</p> {/* Display sheet name */}
               <a
                 href={sheet.sheetUrl}
                 className="text-blue-500"
