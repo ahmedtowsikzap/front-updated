@@ -80,7 +80,7 @@ function AdminDashboard() {
 
   const deleteSheet = async (sheetId) => {
     try {
-      await axios.delete('http://localhost:5000/api/sheets/${sheetId}', {
+      await axios.delete(`http://localhost:5000/api/sheets/${sheetId}`, {
         data: { role },
       });
       setSheets(sheets.filter((sheet) => sheet._id !== sheetId));
