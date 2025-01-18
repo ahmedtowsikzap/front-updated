@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 import './Login.css';
 
-
-
 function Login() {
-  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertType, setAlertType] = useState(''); // success or error
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -20,18 +20,23 @@ function Login() {
       console.log("Login Response Data:", response.data);
       const { message, role, userId, username: dbUsername, designation } = response.data;
 
-      alert(message);
+      setAlertMessage(message);
+      setAlertType('success');
 
-      if (role === 'CEO' || role === 'Manager') {
-        navigate('/admin', { state: { role, username: dbUsername } });
-      } else if (role === 'User') {
-        navigate('/user', { state: { userId, username: dbUsername, designation } });
-      } else {
-        alert('Unknown role. Please contact support.');
-      }
+      setTimeout(() => {
+        if (role === 'CEO' || role === 'Manager') {
+          navigate('/admin', { state: { role, username: dbUsername } });
+        } else if (role === 'User') {
+          navigate('/user', { state: { userId, username: dbUsername, designation } });
+        } else {
+          setAlertMessage('Unknown role. Please contact support.');
+          setAlertType('error');
+        }
+      }, 2000);
     } catch (err) {
       const errorMessage = err.response?.data?.message || 'Login failed. Please try again.';
-      alert(errorMessage);
+      setAlertMessage(errorMessage);
+      setAlertType('error');
     }
   };
 
@@ -43,6 +48,26 @@ function Login() {
       <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Team Govaly</h2>
         <p className="text-center text-gray-500 mb-8">Please log in to your account</p>
+
+        {/* Animated Alert */}
+        {alertMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`alert ${alertType === 'success' ? 'alert-success' : 'alert-error'} shadow-lg mb-4 flex items-center gap-3`}
+          >
+            <div>
+              {alertType === 'success' ? (
+                <FaCheckCircle className="text-green-600 text-lg" />
+              ) : (
+                <FaExclamationCircle className="text-red-600 text-lg" />
+              )}
+            </div>
+            <span>{alertMessage}</span>
+          </motion.div>
+        )}
+
         <form onSubmit={handleLogin}>
           <div className="mb-6">
             <label className="block text-gray-700 font-medium mb-2">Username</label>
