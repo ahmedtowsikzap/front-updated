@@ -18,14 +18,14 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', { username, password });
       console.log("Login Response Data:", response.data);
-      const { message, role, userId, username: dbUsername } = response.data;
+      const { message, role, userId, username: dbUsername, designation } = response.data;
 
       alert(message);
 
       if (role === 'CEO' || role === 'Manager') {
         navigate('/admin', { state: { role, username: dbUsername } });
       } else if (role === 'User') {
-        navigate('/user', { state: { userId, username: dbUsername } });
+        navigate('/user', { state: { userId, username: dbUsername, designation } });
       } else {
         alert('Unknown role. Please contact support.');
       }

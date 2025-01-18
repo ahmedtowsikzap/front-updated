@@ -8,7 +8,7 @@ function UserDashboard() {
   const [error, setError] = useState(null);
 
   const location = useLocation();
-  const { userId, username } = location.state || {};
+  const { userId, username, designation } = location.state || {};
 
   // Check if userId is not passed or not
   useEffect(() => {
@@ -47,6 +47,7 @@ function UserDashboard() {
   return (
     <div className="p-8">
       <h2 className="text-3xl mb-4">Welcome, {username}!</h2>
+      <p className="text-xl text-gray-600 mb-6">Designation: {designation || 'Not Assigned'}</p>
       <div className="space-y-4">
         {sheets.length > 0 ? (
           sheets.map((sheet) => (
