@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
+import {
+  HiOutlineUpload,
+  HiOutlineLink,
+  HiOutlineUser,
+  HiOutlineDocumentText
+} from "react-icons/hi"; // Example: react-icons
 
 function AdminDashboard() {
   const [users, setUsers] = useState([]);
@@ -118,7 +125,7 @@ function AdminDashboard() {
       setNewUsername("");
       setNewPassword("");
       setNewRole("");
-      setNewDesignation(''); 
+      setNewDesignation("");
 
       window.location.reload();
     } catch (error) {
@@ -154,67 +161,130 @@ function AdminDashboard() {
             <div className="space-y-8">
               {/* Upload Sheet Section */}
               <div className="bg-blue-50 p-6 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                  Upload a New Sheet
-                </h3>
-                <input
-                  type="text"
-                  value={newSheetName}
-                  onChange={(e) => setNewSheetName(e.target.value)}
-                  placeholder="Enter Sheet Name"
-                  className="p-3 border border-gray-300 rounded-lg w-full mb-4"
-                />
-                <input
-                  type="text"
-                  value={newSheetUrl}
-                  onChange={(e) => setNewSheetUrl(e.target.value)}
-                  placeholder="Enter Google Sheets URL"
-                  className="p-3 border border-gray-300 rounded-lg w-full mb-4"
-                />
-                <button
-                  onClick={uploadSheet}
-                  className="bg-green-500 text-white p-3 rounded-lg"
+                <motion.h3
+                  className="text-2xl font-semibold text-gray-800 mb-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  Upload Sheet
-                </button>
+                  Upload a New Sheet
+                </motion.h3>
+
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <HiOutlineUpload className="text-gray-600 mr-3" />
+                    <input
+                      type="text"
+                      value={newSheetName}
+                      onChange={(e) => setNewSheetName(e.target.value)}
+                      placeholder="Enter Sheet Name"
+                      className="p-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-green-500"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <div className="flex items-center mb-4">
+                    <HiOutlineLink className="text-gray-600 mr-3" />
+                    <input
+                      type="text"
+                      value={newSheetUrl}
+                      onChange={(e) => setNewSheetUrl(e.target.value)}
+                      placeholder="Enter Google Sheets URL"
+                      className="p-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-green-500"
+                    />
+                  </div>
+                </motion.div>
+
+                <motion.button
+                  onClick={uploadSheet}
+                  className="bg-green-500 text-white p-3 rounded-lg w-full hover:bg-green-600 transition-all duration-300 flex items-center justify-center space-x-3"
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <HiOutlineUpload className="text-white" />
+                  <span>Upload Sheet</span>
+                </motion.button>
               </div>
 
               {/* Assign Sheet Section */}
               <div className="bg-green-50 p-6 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                <motion.h3
+                  className="text-2xl font-semibold text-gray-800 mb-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
                   Assign Sheet to User
-                </h3>
-                <select
-                  onChange={(e) => setSelectedUsername(e.target.value)}
-                  className="p-3 border border-gray-300 rounded-lg w-full mb-4"
-                  value={selectedUsername}
+                </motion.h3>
+
+                {/* User Selection */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <option value="">Select User</option>
-                  {users.map((user) => (
-                    <option key={user._id} value={user.username}>
-                      {user.username}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  onChange={(e) => setSelectedSheetUrl(e.target.value)}
-                  className="p-3 border border-gray-300 rounded-lg w-full mb-4"
-                  value={selectedSheetUrl}
+                  <div className="flex items-center mb-4">
+                    <HiOutlineUser className="text-gray-600 mr-3" />
+                    <select
+                      onChange={(e) => setSelectedUsername(e.target.value)}
+                      className="p-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500"
+                      value={selectedUsername}
+                    >
+                      <option value="">Select User</option>
+                      {users.map((user) => (
+                        <option key={user._id} value={user.username}>
+                          {user.username}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </motion.div>
+
+                {/* Sheet Selection */}
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <option value="">Select Sheet</option>
-                  {sheets.map((sheet) => (
-                    <option key={sheet._id} value={sheet.sheetUrl}>
-                      {sheet.sheetName}
-                    </option>
-                  ))}
-                </select>
-                <button
+                  <div className="flex items-center mb-4">
+                    <HiOutlineDocumentText className="text-gray-600 mr-3" />
+                    <select
+                      onChange={(e) => setSelectedSheetUrl(e.target.value)}
+                      className="p-3 border border-gray-300 rounded-lg w-full focus:ring-2 focus:ring-blue-500"
+                      value={selectedSheetUrl}
+                    >
+                      <option value="">Select Sheet</option>
+                      {sheets.map((sheet) => (
+                        <option key={sheet._id} value={sheet.sheetUrl}>
+                          {sheet.sheetName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </motion.div>
+
+                {/* Button with Animation */}
+                <motion.button
                   onClick={assignSheetToUser}
-                  className="bg-blue-500 text-white p-3 rounded-lg"
+                  className="bg-blue-500 text-white p-3 rounded-lg w-full hover:bg-blue-600 transition-all duration-300 flex items-center justify-center space-x-3"
                   disabled={!selectedUsername || !selectedSheetUrl}
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  Assign Sheet
-                </button>
+                  <HiOutlineDocumentText className="text-white" />
+                  <span>Assign Sheet</span>
+                </motion.button>
               </div>
 
               {/* Create New User Section */}
@@ -264,44 +334,62 @@ function AdminDashboard() {
                 <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                   Sheets and Assignments
                 </h3>
-                <table className="min-w-full border">
-                  <thead>
-                    <tr>
-                      <th className="px-6 py-3">Sheet Name</th>
-                      <th className="px-6 py-3">Sheet URL</th>
-                      <th className="px-6 py-3">Assigned Users</th>
-                      <th className="px-6 py-3">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sheets.map((sheet) => (
-                      <tr key={sheet._id} className="border-b">
-                        <td className="px-6 py-3">{sheet.sheetName}</td>
-                        <td className="px-6 py-3">{sheet.sheetUrl}</td>
-                        <td className="px-6 py-3">
-                          {sheet.assignedTo.length > 0
-                            ? sheet.assignedTo
-                                .map((userId) => {
-                                  const user = users.find(
-                                    (user) => user._id === userId
-                                  );
-                                  return user ? user.username : "Unknown";
-                                })
-                                .join(", ")
-                            : "No users assigned"}
-                        </td>
-                        <td className="px-6 py-3">
-                          <button
-                            onClick={() => deleteSheet(sheet._id)}
-                            className="bg-red-500 text-white p-2 rounded"
-                          >
-                            Delete
-                          </button>
-                        </td>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full border border-gray-300 table-auto">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-6 py-3 text-left">Sheet Name</th>
+                        <th className="px-6 py-3 text-left">Sheet Actions</th>
+                        <th className="px-6 py-3 text-left">Assigned Users</th>
+                        <th className="px-6 py-3 text-left">Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {sheets.map((sheet) => (
+                        <tr
+                          key={sheet._id}
+                          className="border-b hover:bg-gray-50"
+                        >
+                          <td className="px-6 py-3 text-sm md:text-base">
+                            {sheet.sheetName}
+                          </td>
+                          <td className="px-6 py-3 text-sm md:text-base">
+                            <button
+                              onClick={() =>
+                                window.open(sheet.sheetUrl, "_blank")
+                              } // Open URL in a new tab
+                              className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-300 w-full sm:w-auto"
+                            >
+                              View Sheet
+                            </button>
+                          </td>
+                          <td className="px-6 py-3 text-sm md:text-base">
+                            {sheet.assignedTo.length > 0
+                              ? sheet.assignedTo
+                                  .map((userId) => {
+                                    const user = users.find(
+                                      (user) => user._id === userId
+                                    );
+                                    return user ? user.username : "Unknown";
+                                  })
+                                  .join(", ")
+                              : "No users assigned"}
+                          </td>
+                          <td className="px-6 py-3 text-sm md:text-base">
+                            <div className="flex justify-center items-center space-x-3">
+                              <button
+                                onClick={() => deleteSheet(sheet._id)}
+                                className="bg-red-500 text-white p-2  rounded-lg hover:bg-red-600 transition duration-300 w-full sm:w-auto"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </>
