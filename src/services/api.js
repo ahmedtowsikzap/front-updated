@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: 'https://govalyteams-byxuyh4b1-jeion-ahmeds-projects.vercel.app/api',
 });
 
 export default api;

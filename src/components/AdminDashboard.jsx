@@ -30,8 +30,8 @@ function AdminDashboard() {
     async function fetchData() {
       try {
         const [usersResponse, sheetsResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/users"),
-          axios.get("http://localhost:5000/api/sheets"),
+          axios.get("https://govalyteams.vercel.app/api/users"),
+          axios.get("https://govalyteams.vercel.app/api/sheets"),
         ]);
 
         setUsers(usersResponse.data);
@@ -54,7 +54,7 @@ function AdminDashboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/sheets/create",
+        "https://govalyteams.vercel.app/api/sheets/create",
         {
           sheetUrl: newSheetUrl,
           sheetName: newSheetName,
@@ -77,7 +77,7 @@ function AdminDashboard() {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/sheets/assign", {
+      await axios.post("https://govalyteams.vercel.app/api/sheets/assign", {
         username: selectedUsername,
         sheetUrl: selectedSheetUrl,
         role,
@@ -93,7 +93,7 @@ function AdminDashboard() {
 
   const deleteSheet = async (sheetId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/sheets/${sheetId}`, {
+      await axios.delete(`https://govalyteams.vercel.app/api/sheets/${sheetId}`, {
         data: { role },
       });
       setSheets(sheets.filter((sheet) => sheet._id !== sheetId));
@@ -112,7 +112,7 @@ function AdminDashboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/create",
+        "https://govalyteams.vercel.app/api/users/create",
         {
           username: newUsername,
           password: newPassword,
